@@ -4,7 +4,7 @@ public interface DeliveryMethod {
 
     String getName();
 
-    double calculateСost(double orderCost);
+    double calculateCost(double orderCost);
 
     int getEstimatedDays();
 
