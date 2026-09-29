@@ -4,9 +4,9 @@ public interface DeliveryMethod {
 
     String getName();
 
-    double calculateDeliveryCost(double orderCost);
+    double calculateСost(double orderCost);
 
-    int getEstimateDays();
+    int getEstimatedDays();
 
     boolean requiresCourier();
 }
