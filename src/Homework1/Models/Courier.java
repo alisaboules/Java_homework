@@ -5,6 +5,7 @@ public class Courier {
     private final int id;
     private final String name;
     private final String phone;
+    private CourierStatus status;
 
     public Courier(int id, String name, String phone) {
         if (id <= 0) {
@@ -22,6 +23,7 @@ public class Courier {
         this.id = id;
         this.name = name;
         this.phone = phone;
+        this.status = CourierStatus.AVAILABLE;
     }
 
     public int getId() {
@@ -36,11 +38,19 @@ public class Courier {
         return phone;
     }
 
+    public CourierStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(CourierStatus status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "Курьер №" + id
                 + "\nИмя: " + name
                 + "\nТелефон: " + phone
-                + "\nСтатус: ";
+                + "\nСтатус: " + status;
     }
 }
