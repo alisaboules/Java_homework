@@ -11,7 +11,7 @@ public class OrderItem {
             throw new IllegalArgumentException("Название товара не может быть пустым.");
         }
 
-        if (quantity <= 0) {
+        if (quantity < 0) {
             throw new IllegalArgumentException("Количество товаров не может быть меньше нуля.");
         }
 
@@ -25,7 +25,7 @@ public class OrderItem {
 
     }
 
-    public double getTotalPice() {
+    public double getTotalPrice() {
         return quantity * price;
     }
 

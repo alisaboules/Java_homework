@@ -4,7 +4,7 @@ public class PickupDelivery implements DeliveryMethod {
 
     @Override
     public String getName() {
-        return "Экспресс-доставка";
+        return "Самовывоз";
     }
 
     @Override
