@@ -34,29 +34,14 @@ public class ConsoleUI {
 
             try {
                 switch (choice) {
-                    case 1:
-                        createOrder();
-                        break;
-                    case 2:
-                        showOrders();
-                        break;
-                    case 3:
-                        chooseDeliveryMethod();
-                        break;
-                    case 4:
-                        assignCourier();
-                        break;
-                    case 5:
-                        changeOrderStatus();
-                        break;
-                    case 6:
-                        addCourier();
-                        break;
-                    case 0:
-                        running = false;
-                        break;
-                    default:
-                        System.out.println("Такого пункта меню нет.");
+                    case 1 -> createOrder();
+                    case 2 -> showOrders();
+                    case 3 -> chooseDeliveryMethod();                   
+                    case 4 -> changeOrderStatus();
+                    case 5 -> addCourier();
+                    case 6 -> assignCourier();
+                    case 7 -> running = false;
+                    default -> System.out.println("Такого пункта меню нет.");
                 }
             } catch (RuntimeException exception) {
                 System.out.println("Ошибка: " + exception.getMessage());
@@ -72,10 +57,10 @@ public class ConsoleUI {
         System.out.println("1. Создать заказ");
         System.out.println("2. Показать заказы");
         System.out.println("3. Выбрать способ доставки");
-        System.out.println("4. Назначить курьера");
-        System.out.println("5. Изменить статус заказа");
-        System.out.println("6. Добавить курьера");
-        System.out.println("0. Завершить работу");
+        System.out.println("4. Изменить статус заказа");
+        System.out.println("5. Добавить курьера");
+        System.out.println("6. Назначить курьера");
+        System.out.println("7. Завершить работу");
     }
 
     private void createOrder() {
@@ -131,18 +116,13 @@ public class ConsoleUI {
         DeliveryMethod deliveryMethod;
 
         switch (choice) {
-            case 1:
-                deliveryMethod = new StandardDelivery();
-                break;
-            case 2:
-                deliveryMethod = new ExpressDelivery();
-                break;
-            case 3:
-                deliveryMethod = new PickupDelivery();
-                break;
-            default:
+            case 1 -> deliveryMethod = new StandardDelivery();
+            case 2 -> deliveryMethod = new ExpressDelivery();
+            case 3 -> deliveryMethod = new PickupDelivery();
+            default -> {
                 System.out.println("Такого способа доставки нет.");
                 return;
+            }
         }
 
         orderService.setDeliveryMethod(orderNumber, deliveryMethod);
@@ -185,21 +165,14 @@ public class ConsoleUI {
         OrderStatus newStatus;
 
         switch (choice) {
-            case 1:
-                newStatus = OrderStatus.SHIPPED;
-                break;
-            case 2:
-                newStatus = OrderStatus.DELIVERED;
-                break;
-            case 3:
-                newStatus = OrderStatus.CANCELLED;
-                break;
-            case 4:
-                newStatus = OrderStatus.RETURNED;
-                break;
-            default:
+            case 1 -> newStatus = OrderStatus.SHIPPED;
+            case 2 -> newStatus = OrderStatus.DELIVERED;
+            case 3 -> newStatus = OrderStatus.CANCELLED;
+            case 4 -> newStatus = OrderStatus.RETURNED;
+            default -> {
                 System.out.println("Такого статуса нет.");
                 return;
+            }
         }
 
         orderService.changeOrderStatus(orderNumber, newStatus);
