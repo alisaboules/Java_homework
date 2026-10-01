@@ -18,7 +18,8 @@ import java.util.Scanner;
 public class ConsoleUI {
 
     private final OrderService orderService;
-    private final Scanner scanner = new Scanner(System.in);
+
+    private final Scanner scanner = new Scanner(System.in, "Cp866");
 
     public ConsoleUI(OrderService orderService) {
         this.orderService = orderService;
@@ -93,7 +94,7 @@ public class ConsoleUI {
             double price = readNonNegativeDouble("Цена за штуку: ");
 
             items.add(new OrderItem(itemName, quantity, price));
-            addAnotherItem = readYesNo("Добавить ещё один товар? (да/нет): ");
+            addAnotherItem = readYesNo("Добавить ещё один товар?");
         }
 
         Order order = orderService.createOrder(client, address);
@@ -233,9 +234,12 @@ public class ConsoleUI {
         if (order.getDeliveryMethod() == null) {
             System.out.println("Способ доставки пока не выбран.");
         } else {
-            System.out.println("Способ доставки: " + order.getDeliveryMethod().getName());
-            System.out.println("Стоимость доставки: " + order.getDeliveryCost() + " руб.");
-            System.out.println("Срок: " + order.getEstimatedDeliveryDays() + " дн.");
+            System.out.println(
+                    "Способ доставки: " + order.getDeliveryMethod().getName());
+            System.out.println(
+                    "Стоимость доставки: " + order.getDeliveryCost() + " руб.");
+            System.out.println(
+                    "Срок: " + order.getEstimatedDeliveryDays() + " дн.");
             totalCost += order.getDeliveryCost();
         }
 
@@ -297,7 +301,7 @@ public class ConsoleUI {
                     return value;
                 }
             } catch (NumberFormatException exception) {
-                
+
             }
 
             System.out.println("Введите число, равное нулю или больше.");
@@ -306,18 +310,24 @@ public class ConsoleUI {
 
     private boolean readYesNo(String prompt) {
         while (true) {
-            System.out.print(prompt);
+            System.out.print(prompt + " (да/нет или yes/no): ");
             String answer = scanner.nextLine().trim();
 
-            if (answer.equalsIgnoreCase("да") || answer.equalsIgnoreCase("д")) {
+            if (answer.equalsIgnoreCase("да")
+                    || answer.equalsIgnoreCase("д")
+                    || answer.equalsIgnoreCase("yes")
+                    || answer.equalsIgnoreCase("y")) {
                 return true;
             }
 
-            if (answer.equalsIgnoreCase("нет") || answer.equalsIgnoreCase("н")) {
+            if (answer.equalsIgnoreCase("нет")
+                    || answer.equalsIgnoreCase("н")
+                    || answer.equalsIgnoreCase("no")
+                    || answer.equalsIgnoreCase("n")) {
                 return false;
             }
 
-            System.out.println("Введите «да» или «нет».");
+            System.out.println("Введите да/нет или yes/no.");
         }
     }
 }
