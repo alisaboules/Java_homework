@@ -17,18 +17,15 @@ public class Order {
 
     public Order(int number, Client client, String address) {
         if (number <= 0) {
-            throw new IllegalArgumentException(
-                    "Номер заказа должен быть больше нуля.");
+            throw new IllegalArgumentException("Номер заказа должен быть больше нуля.");
         }
 
         if (client == null) {
-            throw new IllegalArgumentException(
-                    "У заказа должен быть клиент.");
+            throw new IllegalArgumentException("У заказа должен быть клиент.");
         }
 
         if (address == null || address.isBlank()) {
-            throw new IllegalArgumentException(
-                    "Адрес не может быть пустым.");
+            throw new IllegalArgumentException("Адрес не может быть пустым.");
         }
 
         this.number = number;
@@ -68,13 +65,11 @@ public class Order {
 
     public void addItem(OrderItem item) {
         if (status != OrderStatus.CREATED) {
-            throw new IllegalStateException(
-                    "Нельзя менять товары после отправки заказа.");
+            throw new IllegalStateException("Нельзя менять товары после отправки заказа.");
         }
 
         if (item == null) {
-            throw new IllegalArgumentException(
-                    "Товар не может быть пустым.");
+            throw new IllegalArgumentException("Товар не может быть пустым.");
         }
 
         items.add(item);
@@ -92,13 +87,11 @@ public class Order {
 
     public void setDeliveryMethod(DeliveryMethod deliveryMethod) {
         if (status != OrderStatus.CREATED) {
-            throw new IllegalStateException(
-                    "Нельзя изменить доставку после отправки заказа.");
+            throw new IllegalStateException("Нельзя изменить доставку после отправки заказа.");
         }
 
         if (deliveryMethod == null) {
-            throw new IllegalArgumentException(
-                    "Способ доставки не выбран.");
+            throw new IllegalArgumentException("Способ доставки не выбран.");
         }
 
         releaseCourier();
@@ -108,8 +101,7 @@ public class Order {
 
     public double getDeliveryCost() {
         if (deliveryMethod == null) {
-            throw new IllegalStateException(
-                    "Сначала выберите способ доставки.");
+            throw new IllegalStateException("Сначала выберите способ доставки.");
         }
 
         return deliveryMethod.calculateCost(getItemsTotal());
