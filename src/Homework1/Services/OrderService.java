@@ -67,8 +67,7 @@ public class OrderService {
 
         for (Courier existingCourier : couriers) {
             if (existingCourier.getId() == courier.getId()) {
-                throw new IllegalArgumentException(
-                        "Курьер с таким ID уже добавлен.");
+                throw new IllegalArgumentException("Курьер с таким ID уже добавлен.");
             }
         }
 
@@ -111,7 +110,6 @@ public class OrderService {
             }
         }
 
-        throw new IllegalArgumentException(
-                "Курьер с ID " + courierId + " не найден.");
+        throw new IllegalArgumentException("Курьер с ID " + courierId + " не найден.");
     }
 }
