@@ -1,6 +1,8 @@
 package Homework1.Delivery;
 
-public class ExpressDelivery implements DeliveryMethod{
+import Homework1.Models.City;
+
+public class ExpressDelivery implements DeliveryMethod {
 
     @Override
     public String getName() {
@@ -8,13 +10,13 @@ public class ExpressDelivery implements DeliveryMethod{
     }
 
     @Override
-    public double calculateCost(double orderCost) {
-        return 600;
+    public double calculateCost(double orderCost, City destination) {
+        return destination.getExpressDeliveryCost();
     }
 
     @Override
-    public int getEstimatedDays() {
-        return 1;
+    public int getEstimatedDays(City destination) {
+        return destination.getExpressDeliveryDays();
     }
 
     @Override

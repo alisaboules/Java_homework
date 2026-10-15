@@ -10,12 +10,13 @@ public class Order {
     private final int number;
     private final Client client;
     private final String address;
+    private final City destination;
     private final List<OrderItem> items;
     private OrderStatus status;
     private DeliveryMethod deliveryMethod;
     private Courier courier;
 
-    public Order(int number, Client client, String address) {
+    public Order(int number, Client client, String address, City destination) {
         if (number <= 0) {
             throw new IllegalArgumentException("Номер заказа должен быть больше нуля.");
         }
@@ -28,11 +29,16 @@ public class Order {
             throw new IllegalArgumentException("Адрес не может быть пустым.");
         }
 
+        if (destination == null) {
+            throw new IllegalArgumentException("Город доставки не выбран.");
+        }
+
         this.number = number;
         this.client = client;
         this.address = address;
         this.items = new ArrayList<>();
         this.status = OrderStatus.CREATED;
+        this.destination = destination;
     }
 
     public int getNumber() {
@@ -104,7 +110,7 @@ public class Order {
             throw new IllegalStateException("Сначала выберите способ доставки.");
         }
 
-        return deliveryMethod.calculateCost(getItemsTotal());
+        return deliveryMethod.calculateCost(getItemsTotal(), destination);
     }
 
     public double getTotalCost() {
@@ -116,7 +122,7 @@ public class Order {
             throw new IllegalStateException("Сначала выберите способ доставки.");
         }
 
-        return deliveryMethod.getEstimatedDays();
+        return deliveryMethod.getEstimatedDays(destination);
     }
 
     public void assignCourier(Courier courier) {

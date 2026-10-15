@@ -1,5 +1,7 @@
 package Homework1.Delivery;
 
+import Homework1.Models.City;
+
 public class StandardDelivery implements DeliveryMethod {
 
     @Override
@@ -8,13 +10,13 @@ public class StandardDelivery implements DeliveryMethod {
     }
 
     @Override
-    public double calculateCost(double orderCost) {
-        return 250;
+    public double calculateCost(double orderCost, City destination) {
+        return destination.getStandardDeliveryCost();
     }
 
     @Override
-    public int getEstimatedDays() {
-        return 2;
+    public int getEstimatedDays(City destination) {
+        return destination.getStandardDeliveryDays();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package Homework1.Services;
 
 import Homework1.Delivery.DeliveryMethod;
+import Homework1.Models.City;
 import Homework1.Models.Client;
 import Homework1.Models.Courier;
 import Homework1.Models.CourierStatus;
@@ -20,8 +21,8 @@ public class OrderService {
     private int nextOrderNumber = 1;
     private int nextCourierId = 1;
 
-    public Order createOrder(Client client, String address) {
-        Order order = new Order(nextOrderNumber, client, address);
+    public Order createOrder(Client client, String address, City destination) {
+        Order order = new Order(nextOrderNumber, client, address, destination);
         nextOrderNumber++;
         orders.add(order);
         return order;
