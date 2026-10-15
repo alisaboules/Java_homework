@@ -11,7 +11,6 @@ import Homework1.Models.Order;
 import Homework1.Models.OrderItem;
 import Homework1.Models.OrderStatus;
 import Homework1.Services.OrderService;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -112,28 +111,37 @@ public class ConsoleUI {
             int choice = readInt("Номер города: ");
 
             switch (choice) {
-                case 1:
+                case 1 -> {
                     return City.MOSCOW;
-                case 2:
+                }
+                case 2 -> {
                     return City.SAINT_PETERSBURG;
-                case 3:
+                }
+                case 3 -> {
                     return City.YEKATERINBURG;
-                case 4:
+                }
+                case 4 -> {
                     return City.KAZAN;
-                case 5:
+                }
+                case 5 -> {
                     return City.NOVOSIBIRSK;
-                case 6:
+                }
+                case 6 -> {
                     return City.VLADIVOSTOK;
-                case 7:
+                }
+                case 7 -> {
                     return City.KAMCHATKA;
-                case 8:
+                }
+                case 8 -> {
                     return City.KALININGRAD;
-                case 9:
+                }
+                case 9 -> {
                     return City.SOCHI;
-                case 10:
+                }
+                case 10 -> {
                     return City.YAKUTSK;
-                default:
-                    System.out.println("Такого города нет. Выберите номер от 1 до 10.");
+                }
+                default -> System.out.println("Такого города нет. Выберите номер от 1 до 10.");
             }
         }
     }
