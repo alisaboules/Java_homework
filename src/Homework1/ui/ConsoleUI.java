@@ -53,7 +53,9 @@ public class ConsoleUI {
 
     private void printMenu() {
         System.out.println();
-        System.out.println("=== Служба доставки ===");
+        System.out.println("╔══════════════════════════════════════╗");
+        System.out.println("║          СЛУЖБА ДОСТАВКИ             ║");
+        System.out.println("╚══════════════════════════════════════╝");
         System.out.println("1. Создать заказ");
         System.out.println("2. Показать заказы");
         System.out.println("3. Выбрать способ доставки");
