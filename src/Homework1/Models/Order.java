@@ -49,6 +49,10 @@ public class Order {
         return client;
     }
 
+    public City getDestination() {
+        return destination;
+    }
+    
     public String getAddress() {
         return address;
     }

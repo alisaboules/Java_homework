@@ -4,6 +4,7 @@ import Homework1.Delivery.DeliveryMethod;
 import Homework1.Delivery.ExpressDelivery;
 import Homework1.Delivery.PickupDelivery;
 import Homework1.Delivery.StandardDelivery;
+import Homework1.Models.City;
 import Homework1.Models.Client;
 import Homework1.Models.Courier;
 import Homework1.Models.Order;
@@ -18,7 +19,6 @@ import java.util.Scanner;
 public class ConsoleUI {
 
     private final OrderService orderService;
-
     private final Scanner scanner = new Scanner(System.in, "Cp866");
 
     public ConsoleUI(OrderService orderService) {
@@ -36,7 +36,7 @@ public class ConsoleUI {
                 switch (choice) {
                     case 1 -> createOrder();
                     case 2 -> showOrders();
-                    case 3 -> chooseDeliveryMethod();                   
+                    case 3 -> chooseDeliveryMethod();
                     case 4 -> changeOrderStatus();
                     case 5 -> addCourier();
                     case 6 -> assignCourier();
@@ -54,7 +54,7 @@ public class ConsoleUI {
     private void printMenu() {
         System.out.println();
         System.out.println("╔══════════════════════════════════════╗");
-        System.out.println("║          СЛУЖБА ДОСТАВКИ             ║");
+        System.out.println("║              Avito - Java            ║");
         System.out.println("╚══════════════════════════════════════╝");
         System.out.println("1. Создать заказ");
         System.out.println("2. Показать заказы");
@@ -68,7 +68,8 @@ public class ConsoleUI {
     private void createOrder() {
         String name = readNonBlank("Имя клиента: ");
         String phone = readNonBlank("Телефон клиента: ");
-        String address = readNonBlank("Адрес доставки: ");
+        City destination = chooseCity();
+        String address = readNonBlank("Ваш адрес: ");
 
         Client client = new Client(name, phone);
         List<OrderItem> items = new ArrayList<>();
@@ -84,7 +85,7 @@ public class ConsoleUI {
             addAnotherItem = readYesNo("Добавить ещё один товар?");
         }
 
-        Order order = orderService.createOrder(client, address);
+        Order order = orderService.createOrder(client, address, destination);
 
         for (OrderItem item : items) {
             orderService.addItemToOrder(order.getNumber(), item);
@@ -92,6 +93,49 @@ public class ConsoleUI {
 
         System.out.println("Создан заказ №" + order.getNumber() + ".");
         printOrder(order);
+    }
+
+    private City chooseCity() {
+        while (true) {
+            System.out.println("Выберите город доставки:");
+            System.out.println("1. Москва");
+            System.out.println("2. Санкт-Петербург");
+            System.out.println("3. Екатеринбург");
+            System.out.println("4. Казань");
+            System.out.println("5. Новосибирск");
+            System.out.println("6. Владивосток");
+            System.out.println("7. Камчатка");
+            System.out.println("8. Калининград");
+            System.out.println("9. Сочи");
+            System.out.println("10. Якутск");
+
+            int choice = readInt("Номер города: ");
+
+            switch (choice) {
+                case 1:
+                    return City.MOSCOW;
+                case 2:
+                    return City.SAINT_PETERSBURG;
+                case 3:
+                    return City.YEKATERINBURG;
+                case 4:
+                    return City.KAZAN;
+                case 5:
+                    return City.NOVOSIBIRSK;
+                case 6:
+                    return City.VLADIVOSTOK;
+                case 7:
+                    return City.KAMCHATKA;
+                case 8:
+                    return City.KALININGRAD;
+                case 9:
+                    return City.SOCHI;
+                case 10:
+                    return City.YAKUTSK;
+                default:
+                    System.out.println("Такого города нет. Выберите номер от 1 до 10.");
+            }
+        }
     }
 
     private void showOrders() {
@@ -132,7 +176,8 @@ public class ConsoleUI {
         Order order = orderService.findOrderByNumber(orderNumber);
         System.out.println("Выбрано: " + deliveryMethod.getName());
         System.out.println("Стоимость доставки: " + order.getDeliveryCost() + " руб.");
-        System.out.println("Ориентировочный срок: " + order.getEstimatedDeliveryDays() + " дн.");
+        System.out.println("Ориентировочный срок: "
+                + order.getEstimatedDeliveryDays() + " дн.");
     }
 
     private void assignCourier() {
@@ -147,7 +192,8 @@ public class ConsoleUI {
         System.out.println("Свободные курьеры:");
 
         for (Courier courier : couriers) {
-            System.out.println("ID: " + courier.getId() + ", имя: " + courier.getName());
+            System.out.println("ID: " + courier.getId()
+                    + ", имя: " + courier.getName());
         }
 
         int courierId = readPositiveInt("Введите ID курьера: ");
@@ -186,7 +232,8 @@ public class ConsoleUI {
         String phone = readNonBlank("Телефон курьера: ");
 
         Courier courier = orderService.createCourier(name, phone);
-        System.out.println("Добавлен курьер №" + courier.getId() + ": " + courier.getName());
+        System.out.println("Добавлен курьер №" + courier.getId()
+                + ": " + courier.getName());
     }
 
     private void printOrder(Order order) {
@@ -194,12 +241,14 @@ public class ConsoleUI {
         System.out.println("Заказ №" + order.getNumber());
         System.out.println("Клиент: " + order.getClient().getName());
         System.out.println("Телефон: " + order.getClient().getPhone());
+        System.out.println("Город: " + order.getDestination().getName());
         System.out.println("Адрес: " + order.getAddress());
-        System.out.println("Статус: " + order.getStatus());
+        System.out.println("Статус: " + order.getStatus().getDisplayName());
         System.out.println("Товары:");
 
         for (OrderItem item : order.getItems()) {
-            System.out.println("- " + item + ", всего: " + item.getTotalPrice() + " руб.");
+            System.out.println("- " + item + ", всего: "
+                    + item.getTotalPrice() + " руб.");
         }
 
         System.out.println("Стоимость товаров: " + order.getItemsTotal() + " руб.");
@@ -209,12 +258,12 @@ public class ConsoleUI {
         if (order.getDeliveryMethod() == null) {
             System.out.println("Способ доставки пока не выбран.");
         } else {
-            System.out.println(
-                    "Способ доставки: " + order.getDeliveryMethod().getName());
-            System.out.println(
-                    "Стоимость доставки: " + order.getDeliveryCost() + " руб.");
-            System.out.println(
-                    "Срок: " + order.getEstimatedDeliveryDays() + " дн.");
+            System.out.println("Способ доставки: "
+                    + order.getDeliveryMethod().getName());
+            System.out.println("Стоимость доставки: "
+                    + order.getDeliveryCost() + " руб.");
+            System.out.println("Срок: "
+                    + order.getEstimatedDeliveryDays() + " дн.");
             totalCost += order.getDeliveryCost();
         }
 
@@ -276,7 +325,7 @@ public class ConsoleUI {
                     return value;
                 }
             } catch (NumberFormatException exception) {
-
+                System.out.println("Введите целое число.");
             }
 
             System.out.println("Введите число, равное нулю или больше.");
