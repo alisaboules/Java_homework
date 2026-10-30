@@ -1,6 +1,5 @@
 package Homework2.wikiSearch;
 
-
 public class Article {
 
     private final int pageId;
