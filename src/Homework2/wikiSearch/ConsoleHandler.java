@@ -1,7 +1,7 @@
 package Homework2.wikiSearch;
 
-import java.util.Scanner;
 import java.util.List;
+import java.util.Scanner;
 
 public class ConsoleHandler {
 

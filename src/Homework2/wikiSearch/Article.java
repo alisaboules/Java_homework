@@ -1,8 +1,12 @@
 package Homework2.wikiSearch;
 
-public class Article {
+import com.google.gson.annotations.SerializedName;
 
-    private final int pageId;
+public class Article {
+    
+    @SerializedName("pageid")
+    private int pageId;
+    
     private final String title;
     private final String snippet;
 

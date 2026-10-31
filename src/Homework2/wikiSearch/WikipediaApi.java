@@ -23,9 +23,7 @@ public class WikipediaApi {
 
     public String search(String query) throws IOException {
         if (query == null || query.isBlank()) {
-            throw new IllegalArgumentException(
-               "Поисковый запрос не может быть пустым."
-            );
+            throw new IllegalArgumentException("Поисковый запрос не может быть пустым.");
         }
 
         String encodedQuery = URLEncoder.encode(query, StandardCharsets.UTF_8);
