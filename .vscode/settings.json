@@ -1,0 +1,9 @@
+{
+    "java.project.sourcePaths": [
+        "src"
+    ],
+    "java.project.referencedLibraries": [
+        "src/Homework2/lib/gson-2.13.2.jar"
+    ],
+    "java.project.outputPath": "out"
+}
