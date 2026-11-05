@@ -21,9 +21,13 @@ public class WikipediaApi {
                 .build();
     }
 
-    public String search(String query) throws IOException {
+    public String search(String query, int offset) throws IOException {
         if (query == null || query.isBlank()) {
             throw new IllegalArgumentException("Поисковый запрос не может быть пустым.");
+        }
+
+        if (offset < 0) {
+            throw new IllegalArgumentException("Смещение не может быть отрицательным.");
         }
 
         String encodedQuery = URLEncoder.encode(query, StandardCharsets.UTF_8);
@@ -34,6 +38,7 @@ public class WikipediaApi {
                 + "&utf8=1"
                 + "&format=json"
                 + "&srlimit=10"
+                + "&sroffset=" + offset
                 + "&srsearch=" + encodedQuery;
 
         HttpRequest request = HttpRequest.newBuilder()

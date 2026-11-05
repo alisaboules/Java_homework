@@ -35,7 +35,7 @@ public class ConsoleHandler {
     }
   }
 
-  public void showArticles(List<Article> articles) {
+  public void showArticles(List<Article> articles, int startNumber) {
 
     if (articles.isEmpty()) {
       System.out.println("По вашему запросу ничего не найдено.");
@@ -48,7 +48,7 @@ public class ConsoleHandler {
 
       Article article = articles.get(i);
 
-      System.out.println((i + 1) + ". " + article.getTitle());
+      System.out.println((startNumber + i + 1) + ". " + article.getTitle());
       System.out.println("   " + article.getSnippet());
       System.out.println();
     }
@@ -96,6 +96,25 @@ public class ConsoleHandler {
       }
 
       System.out.println("Пожалуйста, введите да или нет.");
+    }
+  }
+
+  public boolean askForMoreArticles() {
+
+    while (true) {
+        System.out.print("Хотите посмотреть ещё статьи? (да/нет): ");
+
+        String answer = readLine().toLowerCase();
+
+        if (answer.equals("да")) {
+            return true;
+        }
+
+        if (answer.equals("нет")) {
+            return false;
+        }
+
+        System.out.println("Пожалуйста, введите да или нет.");
     }
   }
 }

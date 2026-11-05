@@ -2,6 +2,7 @@ package Homework2.wikiSearch;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.ArrayList;
 
 public class Main {
 
@@ -19,26 +20,56 @@ public class Main {
       try {
         String query = console.readSearchQuery();
 
-        String json = api.search(query);
+        List<Article> allArticles = new ArrayList<>();
 
-        List<Article> articles = parser.parse(json);
+        int offset = 0;
 
-        console.showArticles(articles);
+        while (true) {
+          String json = api.search(query, offset);
 
-        if (!articles.isEmpty()) {
+          List<Article> articles = parser.parse(json);
 
-          int number = console.readArticleNumber(articles.size());
+          if (articles.isEmpty()) {
+
+            if (offset == 0) {
+                console.showMessage("По вашему запросу ничего не найдено.");
+            } else {
+                console.showMessage("Больше статей нет.");
+            }
+
+            break;
+          }
+
+          console.showArticles(articles, allArticles.size());
+          allArticles.addAll(articles);
+
+          if (articles.size() < 10) {
+              console.showMessage("Это все найденные статьи.");
+              break;
+          }
+
+          if (!console.askForMoreArticles()) {
+              break;
+          }
+
+          offset += articles.size();
+        }
+
+        if (!allArticles.isEmpty()) {
+
+          int number = console.readArticleNumber(allArticles.size());
 
           if (number == 0) {
-            console.showMessage("Статья не выбрана.");
+              console.showMessage("Статья не выбрана.");
           } else {
-            Article selectedArticle = articles.get(number - 1);
+              Article selectedArticle = allArticles.get(number - 1);
 
-            browser.openArticle(selectedArticle.getPageId());
+              browser.openArticle(selectedArticle.getPageId());
 
-            console.showMessage("Команда открытия статьи выполнена.");
+              console.showMessage("Команда открытия статьи выполнена.");
           }
         }
+        
 
       } catch (IllegalStateException e) {
         console.showMessage("\n" + e.getMessage());
