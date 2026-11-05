@@ -1,5 +1,6 @@
 package Homework2.wikiSearch;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Scanner;
 
@@ -8,7 +9,15 @@ public class ConsoleHandler {
   private final Scanner scanner;
 
   public ConsoleHandler() {
-    scanner = new Scanner(System.in);
+    scanner = new Scanner(System.in, StandardCharsets.UTF_8);
+  }
+
+  private String readLine() {
+    if (!scanner.hasNextLine()) {
+      throw new IllegalStateException("Ввод завершён.");
+    }
+
+    return scanner.nextLine().trim();
   }
 
   public String readSearchQuery() {
@@ -16,7 +25,7 @@ public class ConsoleHandler {
     while (true) {
       System.out.print("Введите поисковый запрос: ");
 
-      String query = scanner.nextLine().trim();
+      String query = readLine();
 
       if (!query.isEmpty()) {
         return query;
@@ -48,9 +57,9 @@ public class ConsoleHandler {
   public int readArticleNumber(int count) {
 
     while (true) {
-      System.out.print("Введите номер статьи (0 — выход): ");
+      System.out.print("Введите номер статьи (0 - выход): ");
 
-      String input = scanner.nextLine().trim();
+      String input = readLine();
 
       try {
         int number = Integer.parseInt(input);
@@ -69,5 +78,24 @@ public class ConsoleHandler {
 
   public void showMessage(String message) {
     System.out.println(message);
+  }
+
+  public boolean askForNewSearch() {
+
+    while (true) {
+      System.out.print("Хотите выполнить новый поиск? (да/нет): ");
+
+      String answer = readLine().toLowerCase();
+
+      if (answer.equals("да")) {
+        return true;
+      }
+
+      if (answer.equals("нет")) {
+        return false;
+      }
+
+      System.out.println("Пожалуйста, введите да или нет.");
+    }
   }
 }
