@@ -21,6 +21,7 @@
 
 ## Структура проекта
 
+```text
 Java_homework/
 ├── src/
 │   └── Homework2/
@@ -35,6 +36,7 @@ Java_homework/
 │           └── BrowserOpener.java
 ├── out/
 └── README.md
+```
 
 | Класс           | Назначение                                                                 |
 |-----------------|----------------------------------------------------------------------------|
@@ -86,7 +88,7 @@ Java_homework/
 ### 1. Клонирование репозитория
 
 ```bash
-git clone <URL-репозитория>
+git clone https://github.com/alisaboules/Java_homework.git
 ```
 
 Перейдите в папку проекта:
