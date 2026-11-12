@@ -1,4 +1,3 @@
-
 package Homework2.wikiSearch;
 
 public class Main {
