@@ -2,11 +2,15 @@ package Homework2.wikiSearch;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.regex.Pattern;
+
 public class Article {
-    
+
+    private static final Pattern HTML_TAG_PATTERN = Pattern.compile("<[^>]*>");
+
     @SerializedName("pageid")
-    private int pageId;
-    
+    private final int pageId;
+
     private final String title;
     private final String snippet;
 
@@ -29,14 +33,20 @@ public class Article {
             return "";
         }
 
-        return snippet
-                .replaceAll("<[^>]*>", "")
+        return decodeHtmlEntities(removeHtmlTags(snippet)).trim();
+    }
+
+    private static String removeHtmlTags(String text) {
+        return HTML_TAG_PATTERN.matcher(text).replaceAll("");
+    }
+
+    private static String decodeHtmlEntities(String text) {
+        return text
                 .replace("&quot;", "\"")
-                .replace("&amp;", "&")
                 .replace("&lt;", "<")
                 .replace("&gt;", ">")
                 .replace("&#039;", "'")
                 .replace("&nbsp;", " ")
-                .trim();
+                .replace("&amp;", "&");
     }
 }

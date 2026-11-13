@@ -50,7 +50,7 @@ public class WikiSearchApp {
           console.showArticles(articles, allArticles.size());
           allArticles.addAll(articles);
 
-          if (articles.size() < 10) {
+          if (articles.size() < WikipediaApi.RESULTS_PER_PAGE) {
             console.showMessage("Это все найденные статьи.");
             break;
           }

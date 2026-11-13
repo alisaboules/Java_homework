@@ -102,19 +102,19 @@ public class ConsoleHandler {
   public boolean askForMoreArticles() {
 
     while (true) {
-        System.out.print("Хотите посмотреть ещё статьи? (да/нет): ");
+      System.out.print("Хотите посмотреть ещё статьи? (да/нет): ");
 
-        String answer = readLine().toLowerCase();
+      String answer = readLine().toLowerCase();
 
-        if (answer.equals("да")) {
-            return true;
-        }
+      if (answer.equals("да")) {
+        return true;
+      }
 
-        if (answer.equals("нет")) {
-            return false;
-        }
+      if (answer.equals("нет")) {
+        return false;
+      }
 
-        System.out.println("Пожалуйста, введите да или нет.");
+      System.out.println("Пожалуйста, введите да или нет.");
     }
   }
 }

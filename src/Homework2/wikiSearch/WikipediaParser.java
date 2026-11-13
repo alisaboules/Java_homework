@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WikipediaParser {
-    
+
     private final Gson gson;
 
     public WikipediaParser() {
@@ -21,22 +21,19 @@ public class WikipediaParser {
 
         try {
             Response response = gson.fromJson(json, Response.class);
-            if (response == null || response.query == null || response.query.search == null) {
+            if (response == null || response.query() == null || response.query().search() == null) {
                 return new ArrayList<>();
             }
 
-            return response.query.search;
-
+            return response.query().search();
         } catch (JsonSyntaxException e) {
             throw new IllegalArgumentException("Не удалось разобрать JSON-ответ Википедии.", e);
         }
     }
 
-    private static class Response {
-        private Query query;
+    private record Response(Query query) {
     }
 
-    private static class Query {
-        private List<Article> search;
+    private record Query(List<Article> search) {
     }
 }
