@@ -5,6 +5,9 @@ import java.util.Map;
 
 public class StatisticsService {
 
+  public static final int MIN_FLOOR = 1;
+  public static final int MAX_FLOOR = 5;
+
   private final Map<Address, Integer> duplicates = new HashMap<>();
   private final Map<String, int[]> floorStatistics = new HashMap<>();
 
@@ -13,11 +16,11 @@ public class StatisticsService {
 
     int floor = address.floor();
 
-    if (floor >= 1 && floor <= 5) {
+    if (floor >= MIN_FLOOR && floor <= MAX_FLOOR) {
       int[] counts = floorStatistics.computeIfAbsent(
-          address.city(), city -> new int[5]);
+          address.city(), city -> new int[MAX_FLOOR - MIN_FLOOR + 1]);
 
-      counts[floor - 1]++;
+      counts[floor - MIN_FLOOR]++;
     }
   }
 
