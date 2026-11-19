@@ -2,3 +2,5 @@
 *.log
 out/
 .vscode/
+/src/Homework3/data/*.csv
+/src/Homework3/data/*.xml
